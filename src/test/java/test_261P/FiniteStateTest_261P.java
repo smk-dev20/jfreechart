@@ -9,6 +9,7 @@ import org.jfree.chart.ChartPanel;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class FiniteStateTest_261P {
 
@@ -76,6 +77,16 @@ public void  testPieDataSetState(){
 
 }
 
+@Test
+    public void testTransitionDataToPlot(){
+    DefaultPieDataset<String> data = new DefaultPieDataset<>();
+    data.setValue("Java", 43);
+    data.setValue("Visual Basic", 12);
+    data.setValue("C/C++", 17);
+    JFreeChart pieChart =  ChartFactory.createPieChart("Pie Chart", data);
 
+    assertNotNull(pieChart.getPlot());
+    assertEquals(((PiePlot)pieChart.getPlot()).getDataset(),data);
+}
 
 }
