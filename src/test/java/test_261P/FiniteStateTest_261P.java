@@ -12,6 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FiniteStateTest_261P {
 
+    /**
+     * Test PieDataSet state - obj needs to have set values
+     *
+     */
 @Test
 public void  testPieDataSetState(){
     DefaultPieDataset<String> data = new DefaultPieDataset<>();
@@ -26,7 +30,10 @@ public void  testPieDataSetState(){
     assertEquals("Visual Basic",data.getKey(1));
     assertEquals("C/C++",data.getKey(2));
 }
-
+    /**
+     * Test PiePlot state - plot obj has to have set values
+     *
+     */
 @Test
     public void testPiePlotState(){
 
@@ -46,7 +53,10 @@ public void  testPieDataSetState(){
     assertEquals(6.0, p.getShadowYOffset());
 
 }
-
+    /**
+     * Test JFreechart state - obj has to have set values
+     *
+     */
 @Test
     public void testJFreeChartState(){
     DefaultPieDataset<String> data = new DefaultPieDataset<>();
@@ -59,7 +69,10 @@ public void  testPieDataSetState(){
     assertEquals(data, ((PiePlot)pieChart.getPlot()).getDataset());
     assertEquals(title, pieChart.getTitle());
 }
-
+    /**
+     * Test State PieChart output,object has to have valus set
+     *
+     */
 @Test
     public void testPieChartOutputState(){
     DefaultPieDataset<String> data = new DefaultPieDataset<>();
@@ -76,6 +89,10 @@ public void  testPieDataSetState(){
 
 }
 
+    /**
+     * Test Transition Data -> Plot
+     *
+     */
 @Test
     public void testTransitionDataToPlot(){
     DefaultPieDataset<String> data = new DefaultPieDataset<>();
