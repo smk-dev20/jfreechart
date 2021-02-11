@@ -432,5 +432,5 @@ private JFreeChart pieChart;
 
         assertEquals(3,this.pieChart.getPlot().getLegendItems().getItemCount());
     }
-    
+
 }

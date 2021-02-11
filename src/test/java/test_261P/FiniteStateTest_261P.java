@@ -8,8 +8,7 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.chart.ChartPanel;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FiniteStateTest_261P {
 
@@ -89,4 +88,82 @@ public void  testPieDataSetState(){
     assertEquals(((PiePlot)pieChart.getPlot()).getDataset(),data);
 }
 
+    /**
+     * Test Transition Plot to Chart
+     * check if the new chart has the same data as plot
+     */
+    @Test
+    public void testTransitionPlotToChart(){
+        DefaultPieDataset<String> data = new DefaultPieDataset<>();
+        data.setValue("Java", 43);
+        data.setValue("Visual Basic", 12);
+        data.setValue("C/C++", 17);
+
+        PiePlot plot = new PiePlot();
+        plot.setDataset(data);
+        JFreeChart pieChart =  ChartFactory.createPieChart("Pie Chart", data);
+
+        assertEquals(((PiePlot)pieChart.getPlot()).getDataset(), plot.getDataset());
+    }
+
+    /**
+     * Test Transition Plot -> Data
+     * modify plot data
+     */
+    @Test
+    public void testTransitionPlotToData(){
+        DefaultPieDataset<String> oldData = new DefaultPieDataset<>();
+        oldData.setValue("Java", 43);
+        oldData.setValue("Visual Basic", 12);
+        oldData.setValue("C/C++", 17);
+
+        PiePlot plot = new PiePlot(oldData);
+
+        DefaultPieDataset<String> newData = new DefaultPieDataset<>();
+        newData.setValue("Wealth", 80);
+        newData.setValue("Health", 35);
+        newData.setValue("Happiness", 1);
+        plot.setDataset(newData);
+
+        assertNotEquals(oldData, plot.getDataset());
+        assertEquals(newData, plot.getDataset());
+    }
+
+    /**
+     * Test Transition Chart <-> Chart
+     * update chart data
+     */
+    @Test
+    public void testTransitionChartToPlot(){
+        DefaultPieDataset<String> oldData = new DefaultPieDataset<>();
+        oldData.setValue("Java", 43);
+        oldData.setValue("Visual Basic", 12);
+        oldData.setValue("C/C++", 17);
+
+        JFreeChart pieChart =  ChartFactory.createPieChart("Pie Chart", oldData);
+
+        DefaultPieDataset<String> newData = new DefaultPieDataset<>();
+        newData.setValue("Wealth", 80);
+        newData.setValue("Health", 35);
+        newData.setValue("Happiness", 1);
+
+        ((PiePlot)pieChart.getPlot()).setDataset(newData);
+        assertNotEquals(oldData, (((PiePlot)pieChart.getPlot()).getDataset()));
+        assertEquals(newData, (((PiePlot)pieChart.getPlot()).getDataset()));
+    }
+
+    /**
+     * Test Transition Data -> Plot -> Chart
+     *
+     */
+    @Test
+    public void testTransitionDataToPlotToChart(){
+        DefaultPieDataset<String> data = new DefaultPieDataset<>();
+        data.setValue("Java", 43);
+        data.setValue("Visual Basic", 12);
+        data.setValue("C/C++", 17);
+
+        JFreeChart pieChart =  ChartFactory.createPieChart("Pie Chart", data);
+        assertEquals(data, (((PiePlot)pieChart.getPlot()).getDataset()));
+    }
 }
