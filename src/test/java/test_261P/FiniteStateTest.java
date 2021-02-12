@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FiniteStateTest_261P {
+public class FiniteStateTest {
 
     /**
      * Test PieDataSet state - obj needs to have set values
