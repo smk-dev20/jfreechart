@@ -211,7 +211,7 @@ public class FiniteStateTest_261P {
 
         JFreeChart pieChart = ChartFactory.createPieChart("pieChart", data);
         try {
-            ChartUtils.saveChartAsPNG(new File("test_chart_output.png"), pieChart,300, 200);
+            ChartUtils.saveChartAsPNG(new File("src/test/java/test_261P/test_chart_output.png"), pieChart,300, 200);
         }catch(IOException e) {
             fail("Saving chart as PNG should not throw an exception");
         }
@@ -258,7 +258,7 @@ public class FiniteStateTest_261P {
         JFreeChart pieChart = ChartFactory.createPieChart("pieChart", data);
         assertEquals(data, (((PiePlot) pieChart.getPlot()).getDataset()));
         try{
-        ChartUtils.saveChartAsPNG(new File("test_chart.png"), pieChart,300, 200);
+          ChartUtils.saveChartAsPNG(new File("src/test/java/test_261P/test_chart.png"), pieChart,300, 200);
         }catch(IOException ex){
             fail("Saving chart as PNG should not throw an exception");
         }
