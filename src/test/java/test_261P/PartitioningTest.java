@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PartitioningTest_261P {
+public class PartitioningTest {
 
     /** A chart. */
 private JFreeChart pieChart;
@@ -82,7 +82,6 @@ private JFreeChart pieChart;
         ((PiePlot)this.pieChart.getPlot()).setDataset(data);
 
         assertEquals(true, l.flag);
-
         assertEquals(2,this.pieChart.getPlot().getLegendItems().getItemCount());
     }
 
@@ -432,5 +431,5 @@ private JFreeChart pieChart;
 
         assertEquals(3,this.pieChart.getPlot().getLegendItems().getItemCount());
     }
-    
+
 }
