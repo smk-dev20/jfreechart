@@ -76,7 +76,7 @@ public class FiniteStateTest {
     }
 
     /**
-     * Test State PieChart output,object has to have valus set
+     * Test State PieChart output,object has to have values set
      */
     @Test
     public void testPieChartOutputState() {

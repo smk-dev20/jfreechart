@@ -7,8 +7,9 @@ Sherlin Mary Koshy
 
 Project Part 1 : Partitioning
 Code added in Folder /test_261P within the existing test folder
-Filename : PartitioningTest_261P.java
+Filename : PartitioningTest.java
+
 
 Project Part 2 : Finite State Machine
 Code added in Folder /test_261P
-Filename : FiniteStateTest_261P.java
+Filename : FiniteStateTest.java
