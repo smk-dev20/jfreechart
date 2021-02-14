@@ -100,7 +100,10 @@ public class CoverageTest {
 
     /**
      * Coverage test on ChartFactory Class method
-     *
+     * ChartFactory before improving coverage:
+     *      (OG coverage by line 52% 282/536, by branch 27% 10/37)
+     * ChartFactory after improving coverage:
+     *      (current coverage by line 71% 384/536, by branch 59% 46/77)
      * -----------------------------------
      * tested method 1: createPieChart with 10 arguments including "locale"
      * (Line308 - Line385),  Uncovered Line Count: 46
@@ -371,5 +374,49 @@ public class CoverageTest {
         assertEquals("Current Life Balance vs Previous Life Balance", jc.getTitle().getText());
     }
 
+    /**
+     * tested method 3 : createPieChart with 5 arguments including "locale"
+     * (Line203 - Line217),  Uncovered Line Count: 8
+     */
+    @Test
+    public void testCoverageCreatePieChartBranchPath9() {
+        // Branch path 9 - tooltips is true
+        DefaultPieDataset<String> data = new DefaultPieDataset<>();
+        data.setValue("Wealth", 50);
+        data.setValue("Health", 80);
+        data.setValue("Happiness", 90);
 
+        Locale locale = new Locale("en", "US");
+
+        JFreeChart jc = ChartFactory.createPieChart(
+                "Current Life Balance",
+                data,    // dataset
+                true,
+                true,
+                locale
+        );
+
+        assertEquals("Current Life Balance", jc.getTitle().getText());
+    }
+
+    @Test
+    public void testCoverageCreatePieChartBranchPath10() {
+        // Branch path 10 - tooltips is false
+        DefaultPieDataset<String> data = new DefaultPieDataset<>();
+        data.setValue("Wealth", 50);
+        data.setValue("Health", 80);
+        data.setValue("Happiness", 90);
+
+        Locale locale = new Locale("en", "US");
+
+        JFreeChart jc = ChartFactory.createPieChart(
+                "Current Life Balance",
+                data,    // dataset
+                true,
+                false,
+                locale
+        );
+
+        assertEquals("Current Life Balance", jc.getTitle().getText());
+    }
 }
