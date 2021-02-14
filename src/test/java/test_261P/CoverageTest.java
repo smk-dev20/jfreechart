@@ -100,9 +100,9 @@ public class CoverageTest {
 
     /**
      * Coverage test on ChartFactory Class method
-     * (OG coverage by line 52% 282/536, by branch 27% 10/37)
+     *
      * -----------------------------------
-     * tested method: createPieChart with 10 arguments including "locale"
+     * tested method 1: createPieChart with 10 arguments including "locale"
      * (Line308 - Line385),  Uncovered Line Count: 46
      */
     @Test
@@ -238,5 +238,138 @@ public class CoverageTest {
 
         assertEquals("Current Life Balance vs Previous Life Balance", jc.getTitle().getText());
     }
+
+    /**
+     * tested method 2: createPieChart with 10 arguments including "url"
+     * (Line426 - Line506),  Uncovered Line Count: 48
+     */
+    @Test
+    public void testCoverageCreatePieChartBranchPath5() {
+        // Branch path 5 - Two datasets both have values in the same key,
+        // all boolean arguments are true
+        DefaultPieDataset<String> newData = new DefaultPieDataset<>();
+        newData.setValue("Wealth", 50);
+        newData.setValue("Health", 80);
+        newData.setValue("Happiness", 90);
+
+        DefaultPieDataset<String> oldData = new DefaultPieDataset<>();
+        oldData.setValue("Wealth", 80);
+        oldData.setValue("Health", 35);
+        oldData.setValue("Happiness", 1);
+
+        JFreeChart jc = ChartFactory.createPieChart(
+                "Current Life Balance vs Previous Life Balance",
+                newData,    // dataset
+                oldData,    // previous dataset
+                10,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+        );
+
+        assertEquals("Current Life Balance vs Previous Life Balance", jc.getTitle().getText());
+    }
+
+    @Test
+    public void testCoverageCreatePieChartBranchPath6() {
+        // Branch path 6 - One dataset doesn't have value in the same key of the other,
+        // all boolean arguments are false
+        DefaultPieDataset<String> newData = new DefaultPieDataset<>();
+        newData.setValue("Wealth", 50);
+        newData.setValue("Health", 80);
+        newData.setValue("Freedom", 70);
+        newData.setValue("Happiness", 90);
+
+        DefaultPieDataset<String> oldData = new DefaultPieDataset<>();
+        oldData.setValue("Wealth", 80);
+        oldData.setValue("Health", 35);
+        oldData.setValue("Freedom", null);
+        oldData.setValue("Happiness", 1);
+
+        JFreeChart jc = ChartFactory.createPieChart(
+                "Current Life Balance vs Previous Life Balance",
+                newData,    // dataset
+                oldData,    // previous dataset
+                10,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+        );
+
+        assertEquals("Current Life Balance vs Previous Life Balance", jc.getTitle().getText());
+    }
+
+    @Test
+    public void testCoverageCreatePieChartBranchPath7() {
+        // Branch path 7 - One dataset doesn't have value in the same key of the other,
+        // arguments: percentDiffForMaxScale 70, greenForIncrease true, showDifference true,
+        // others false
+        DefaultPieDataset<String> newData = new DefaultPieDataset<>();
+        newData.setValue("Wealth", 50);
+        newData.setValue("Health", 80);
+        newData.setValue("Freedom", 70);
+        newData.setValue("Happiness", 90);
+
+        DefaultPieDataset<String> oldData = new DefaultPieDataset<>();
+        oldData.setValue("Wealth", 80);
+        oldData.setValue("Health", 35);
+        oldData.setValue("Freedom", null);
+        oldData.setValue("Happiness", 1);
+
+        JFreeChart jc = ChartFactory.createPieChart(
+                "Current Life Balance vs Previous Life Balance",
+                newData,    // dataset
+                oldData,    // previous dataset
+                70,
+                true,
+                false,
+                false,
+                true,
+                false,
+                true
+        );
+
+        assertEquals("Current Life Balance vs Previous Life Balance", jc.getTitle().getText());
+    }
+
+    @Test
+    public void testCoverageCreatePieChartBranchPath8() {
+        // Branch path 8 - One dataset doesn't have value in the same key of the other,
+        // arguments: percentDiffForMaxScale 70, subTitle true, showDifference true,
+        // others false
+        DefaultPieDataset<String> newData = new DefaultPieDataset<>();
+        newData.setValue("Wealth", 50);
+        newData.setValue("Health", 80);
+        newData.setValue("Freedom", 70);
+        newData.setValue("Happiness", 90);
+
+        DefaultPieDataset<String> oldData = new DefaultPieDataset<>();
+        oldData.setValue("Wealth", 80);
+        oldData.setValue("Health", 35);
+        oldData.setValue("Freedom", null);
+        oldData.setValue("Happiness", 1);
+
+        JFreeChart jc = ChartFactory.createPieChart(
+                "Current Life Balance vs Previous Life Balance",
+                newData,    // dataset
+                oldData,    // previous dataset
+                70,
+                false,
+                false,
+                false,
+                true,
+                true,
+                true
+        );
+
+        assertEquals("Current Life Balance vs Previous Life Balance", jc.getTitle().getText());
+    }
+
 
 }
