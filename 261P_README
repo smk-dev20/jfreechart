@@ -9,7 +9,6 @@ Project Part 1 : Partitioning
 Code added in Folder /test_261P within the existing test folder
 Filename : PartitioningTest.java
 
-
 Project Part 2 : Finite State Machine
 Code added in Folder /test_261P
 Filename : FiniteStateTest.java
@@ -17,3 +16,7 @@ Filename : FiniteStateTest.java
 Project Part 3 : Coverage
 Code added in Folder /test_261P
 Filename : CoverageTest.java
+
+Project part 4 : Continuous Integration
+Code added in root folder
+Filename : .travis.yml
