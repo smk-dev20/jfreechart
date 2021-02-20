@@ -81,6 +81,7 @@ public class CoverageTest {
             ChartFrame cf = new ChartFrame("My Title", ChartFactory.createPieChart("myChart", data));
             Assertions.assertNotNull(cf);
         }catch(Exception e){
+            e.printStackTrace();
             Assertions.fail("should not throw exception");
         }
         try {
