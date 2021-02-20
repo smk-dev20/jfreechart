@@ -78,21 +78,21 @@ public class FiniteStateTest {
     /**
      * Test State PieChart output,object has to have values set
      */
-//    @Test
-//    public void testPieChartOutputState() {
-//        DefaultPieDataset<String> data = new DefaultPieDataset<>();
-//        data.setValue("Java", 43);
-//        data.setValue("Visual Basic", 12);
-//        data.setValue("C/C++", 17);
-//        JFreeChart pieChart = ChartFactory.createPieChart("Pie Chart", data);
-//        ChartPanel panel = new ChartPanel(pieChart);
-//        panel.setMaximumDrawWidth(13);
-//        panel.setMaximumDrawHeight(15);
-//        assertEquals(pieChart, panel.getChart());
-//        assertEquals(13, panel.getMaximumDrawWidth());
-//        assertEquals(15, panel.getMaximumDrawHeight());
-//
-//    }
+    @Test
+    public void testPieChartOutputState() {
+        DefaultPieDataset<String> data = new DefaultPieDataset<>();
+        data.setValue("Java", 43);
+        data.setValue("Visual Basic", 12);
+        data.setValue("C/C++", 17);
+        JFreeChart pieChart = ChartFactory.createPieChart("Pie Chart", data);
+        ChartPanel panel = new ChartPanel(pieChart);
+        panel.setMaximumDrawWidth(13);
+        panel.setMaximumDrawHeight(15);
+        assertEquals(pieChart, panel.getChart());
+        assertEquals(13, panel.getMaximumDrawWidth());
+        assertEquals(15, panel.getMaximumDrawHeight());
+
+    }
 
     /**
      * Test Transition Data -> Plot
