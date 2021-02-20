@@ -3,3 +3,6 @@ jdk :
   - openjdk11
 
 script : mvn clean install
+dist: xenial
+services:
+  - xvfb

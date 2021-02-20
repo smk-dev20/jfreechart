@@ -77,24 +77,24 @@ public class CoverageTest {
         data.setValue("Apple", 60);
         data.setValue("Qualcomm", 45);
         data.setValue("Amazon", 35);
-//        try {
-//            ChartFrame cf = new ChartFrame("My Title", ChartFactory.createPieChart("myChart", data));
-//            Assertions.assertNotNull(cf);
-//        }catch(Exception e){
-//            e.printStackTrace();
-//            Assertions.fail("should not throw exception");
-//        }
-//        try {
-//            ChartFrame cf = new ChartFrame("My Title", ChartFactory.createPieChart("myChart", data), true);
-//            Assertions.assertNotNull(cf);
-//            JFreeChart chartObj = cf.getChartPanel().getChart();
-//            Assertions.assertNotNull(chartObj);
-//            PiePlot<String> plot = ((PiePlot<String>)chartObj.getPlot());
-//            Assertions.assertEquals(plot.getDataset(), data);
-//            Assertions.assertEquals(chartObj.getTitle().getText(), "myChart");
-//        }catch(Exception e){
-//            Assertions.fail("should not throw exception");
-//        }
+        try {
+            ChartFrame cf = new ChartFrame("My Title", ChartFactory.createPieChart("myChart", data));
+            Assertions.assertNotNull(cf);
+        }catch(Exception e){
+            e.printStackTrace();
+            Assertions.fail("should not throw exception");
+        }
+        try {
+            ChartFrame cf = new ChartFrame("My Title", ChartFactory.createPieChart("myChart", data), true);
+            Assertions.assertNotNull(cf);
+            JFreeChart chartObj = cf.getChartPanel().getChart();
+            Assertions.assertNotNull(chartObj);
+            PiePlot<String> plot = ((PiePlot<String>)chartObj.getPlot());
+            Assertions.assertEquals(plot.getDataset(), data);
+            Assertions.assertEquals(chartObj.getTitle().getText(), "myChart");
+        }catch(Exception e){
+            Assertions.fail("should not throw exception");
+        }
 
     }
 
