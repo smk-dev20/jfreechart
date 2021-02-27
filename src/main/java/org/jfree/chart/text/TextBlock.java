@@ -282,8 +282,56 @@ public class TextBlock implements Serializable {
         result[0] = xAdj;
         result[1] = yAdj;
         return result;
-    }   
-    
+    }
+
+
+    public float[] calculateOffsetsModified(TextBlockAnchor anchor, double width,
+                                     double height) {
+        float[] result = new float[2];
+        float xAdj = 0.0f;
+        float yAdj = 0.0f;
+
+        if (anchor == TextBlockAnchor.TOP_CENTER
+                || anchor == TextBlockAnchor.CENTER
+                || anchor == TextBlockAnchor.BOTTOM_CENTER) {
+
+            xAdj = (float) -width / 2.0f;
+
+        }
+        else if (anchor == TextBlockAnchor.TOP_RIGHT
+                || anchor == TextBlockAnchor.CENTER_RIGHT
+                || anchor == TextBlockAnchor.BOTTOM_RIGHT) {
+
+            xAdj = (float) -width;
+
+        }
+
+        if (anchor == TextBlockAnchor.TOP_LEFT
+                || anchor == TextBlockAnchor.TOP_CENTER
+                || anchor == TextBlockAnchor.TOP_RIGHT) {
+
+            yAdj = 0.0f;
+
+        }
+        else if (anchor == TextBlockAnchor.CENTER_LEFT
+                || anchor == TextBlockAnchor.CENTER
+                || anchor == TextBlockAnchor.CENTER_RIGHT) {
+
+            yAdj = (float) -height / 2.0f;
+
+        }
+        else if (anchor == TextBlockAnchor.BOTTOM_LEFT
+                || anchor == TextBlockAnchor.BOTTOM_CENTER
+                || anchor == TextBlockAnchor.BOTTOM_RIGHT) {
+
+            yAdj = (float) -height;
+
+        }
+        result[0] = xAdj;
+        result[1] = yAdj;
+        return result;
+    }
+
     /**
      * Tests this object for equality with an arbitrary object.
      * 
