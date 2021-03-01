@@ -3,6 +3,9 @@ package test_261P;
 import org.jfree.chart.*;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.Plot;
+import org.jfree.chart.title.LegendTitle;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.chart.title.Title;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.junit.Before;
@@ -10,6 +13,7 @@ import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,6 +62,10 @@ public class MockingTest {
         verify(chartFrame, times(1)).getChartPanel();
     }
 
+    /**
+     * This is to test SaveChart functionality in a isolated manner from user input i.e. DataSet.
+     * We mock the dataset here and check ChartUtils.saveChart() functionality
+     */
     @Test
     public void testSaveChartDataSetInteraction(){
         DefaultPieDataset<String> mockDataSet = mock(DefaultPieDataset.class);
@@ -92,7 +100,7 @@ public class MockingTest {
          //getValue gets called for an item index
         verify(mockDataSet, atMost(2)).getKey(0);
         verify(mockDataSet, atMost(1)).getKey(1);
-        verify(mockDataSet, atMost(1)).getKey(1);
+        verify(mockDataSet, atMost(1)).getKey(2);
 
         //verify that mockDataSet calls getValue(key) at least 3times for 3keys.
         // Don't know how many times inner code is calling mockDataSet methods. Numbers are as high as12 to 36. So put atleast(1)
@@ -102,16 +110,57 @@ public class MockingTest {
 // verify data set was changed once
     }
 
+    @Test
+    public void testJFreeChartIndependentOfPlot(){
+        // a mock of the abstract class Plot. This is all that a JFreeChart needs
+        Plot mockPlot = mock(Plot.class);
+        // when asked for legend Item Collection, return a legendItemCollection with empty legends
+        LegendItemCollection lic = new LegendItemCollection();
+        when(mockPlot.getLegendItems()).thenReturn(lic);
+        final Font font = new Font("SansSerif", Font.BOLD, 18);
+        //construct chart
+        JFreeChart chart = new JFreeChart("Test chart", font, mockPlot, true);
+
+        String newTitle = "new title";
+        chart.setTitle(newTitle);
+        TextTitle gotTitle = chart.getTitle();
+        assert gotTitle.getText().equals(newTitle);
+
+        String newSubTitle = "new subtitle";
+        chart.addSubtitle(new TextTitle(newSubTitle));
+        // get newly added subtitle at location 1 as location 0 holds the default LegendTitle
+        Title gotSubTitle = chart.getSubtitle(1);
+        assert ((TextTitle)gotSubTitle).getText().equals(newSubTitle);
+
+        Image backgroundImage = chart.getBackgroundImage();
+        assert backgroundImage==null;
+        // getLegend() should not give a call to plot's methods
+        LegendTitle chartLegend = chart.getLegend();
+
+        //at the end get and check title
+        LegendItemCollection legendCollection = chart.getPlot().getLegendItems();
+        assert legendCollection.equals(lic);
+
+        // verify the interactions that happened once during setup of JFreeChart
+        verify(mockPlot, times(1)).addChangeListener(any());
+        verify(mockPlot, times(1)).setChart(chart);
+        // verify getLegendItems() was called once from this method
+        verify(mockPlot, times(1)).getLegendItems();
+
+        // verify that no more interactions happened with the mock
+        verifyNoMoreInteractions(mockPlot);
+    }
+
     public static void main(String[] args) {
         //example code to see a  chartFrame. Maybe can use in mocking in a test function.
-        MockingTest M = new MockingTest();
-        DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
-        dataset.setValue("one", 1);
-        dataset.setValue("two", 2);
-        JFreeChart pieChart = ChartFactory.createPieChart("Pie Chart", dataset);
-
-        M.frame = new ChartFrame("My Chart", pieChart);
-        M.frame.pack();
-        M.frame.setVisible(true);
+//        MockingTest M = new MockingTest();
+//        DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
+//        dataset.setValue("one", 1);
+//        dataset.setValue("two", 2);
+//        JFreeChart pieChart = ChartFactory.createPieChart("Pie Chart", dataset);
+//
+//        M.frame = new ChartFrame("My Chart", pieChart);
+//        M.frame.pack();
+//        M.frame.setVisible(true);
     }
 }
