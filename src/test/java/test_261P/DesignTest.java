@@ -25,6 +25,16 @@ public class DesignTest {
             Arrays.toString(resultTL),
             Arrays.toString(new float[] {0.0f, 0.0f}));
 
+    float[] resultMaxTL = textBlock.calculateOffsetsModified(TextBlockAnchor.TOP_LEFT, Float.MAX_VALUE,Float.MAX_VALUE);
+    assertNotNull(resultMaxTL);
+    Assert.assertEquals(
+         Arrays.toString(resultMaxTL),
+         Arrays.toString(new float[] {0.0f, 0.0f}));
 
-}
+    float[] resultMinTL = textBlock.calculateOffsetsModified(TextBlockAnchor.TOP_LEFT, Float.MIN_VALUE,Float.MIN_VALUE);
+    assertNotNull(resultMinTL);
+    Assert.assertEquals(
+         Arrays.toString(resultMinTL),
+         Arrays.toString(new float[] {0.0f, 0.0f}));
+   }
 }
