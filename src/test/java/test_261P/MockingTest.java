@@ -15,20 +15,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import static org.mockito.Mockito.*;
+import org.junit.Assert;
 
 public class MockingTest {
-    private ChartFactory chartFactory;
     private ChartFrame chartFrame;
-    private Plot plot;
-    private ChartFrame frame;
 
     @Before
     public void setup() {
         //  Mocks are being created.
-        chartFactory = mock(ChartFactory.class);
         chartFrame = mock(ChartFrame.class);
-        plot = mock(Plot.class);
-
         MockitoAnnotations.initMocks(this);
     }
 
@@ -40,7 +35,7 @@ public class MockingTest {
         data.setValue("C/C++", 17);
         JFreeChart pieChart = ChartFactory.createPieChart("Pie Chart", data);
         when(chartFrame.getChartPanel()).thenReturn(new ChartPanel(pieChart));
-        boolean correctDataset = ((PiePlot)(chartFrame.getChartPanel().getChart().getPlot())).getDataset().equals(data);
+        Assert.assertEquals(data, ((PiePlot)(chartFrame.getChartPanel().getChart().getPlot())).getDataset());
         verify(chartFrame, times(1)).getChartPanel();
     }
 
@@ -60,26 +55,25 @@ public class MockingTest {
         for (int i=0; i<values.length; i++){
             when(mockDataSet.getKey(i)).thenReturn(keys[i]);
         }
-        String str;
         when(mockDataSet.getItemCount()).thenReturn(keys.length);
         when(mockDataSet.getValue("first")).thenReturn(10);
         when(mockDataSet.getValue("second")).thenReturn(20);
         when(mockDataSet.getValue("third")).thenReturn(30);
 
         JFreeChart pieChart = ChartFactory.createPieChart("Pie Chart", mockDataSet);
-        ((PiePlot)(pieChart.getPlot())).getDataset().getKey(0);
-        // safe here. we know how many times mockDataSet() methods are called
+        Assert.assertEquals("first", ((PiePlot)(pieChart.getPlot())).getDataset().getKey(0));
         verify(mockDataSet, times(1)).getKey(0);
         verify(mockDataSet, never()).getKey(1);
         verify(mockDataSet, never()).getKey(2);
 
         try {
             ChartUtils.saveChartAsPNG(new File("../test3.png"),pieChart, 900, 900);
+            Assert.assertTrue(new File("../test3.png").exists());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //
-         //getValue gets called for an item index
+
+        //getValue gets called for an item index
         verify(mockDataSet, times(2)).getKey(0);
         verify(mockDataSet, times(1)).getKey(1);
         verify(mockDataSet, times(1)).getKey(2);
@@ -87,8 +81,6 @@ public class MockingTest {
         //verify that mockDataSet calls getValue(key) at least 3times for 3keys.
         verify(mockDataSet, atLeast(3)).getValue(anyString());
         verify(mockDataSet, atLeast(1)).getKeys();
-
-// verify data set was changed once
     }
 
     @Test
@@ -104,19 +96,23 @@ public class MockingTest {
         String newTitle = "new title";
         chart.setTitle(newTitle);
         TextTitle gotTitle = chart.getTitle();
-        assert gotTitle.getText().equals(newTitle);
+        Assert.assertEquals(newTitle, gotTitle.getText());
+
         String newSubTitle = "new subtitle";
         chart.addSubtitle(new TextTitle(newSubTitle));
         // get newly added subtitle at location 1 as location 0 holds the default LegendTitle
         Title gotSubTitle = chart.getSubtitle(1);
-        assert ((TextTitle)gotSubTitle).getText().equals(newSubTitle);
+        Assert.assertEquals(newSubTitle, ((TextTitle)gotSubTitle).getText());
+
         Image backgroundImage = chart.getBackgroundImage();
-        assert backgroundImage==null;
+        Assert.assertNull(backgroundImage);
+
         // getLegend() should not give a call to plot's methods
         LegendTitle chartLegend = chart.getLegend();
         //at the end get and check title
         LegendItemCollection legendCollection = chart.getPlot().getLegendItems();
-        assert legendCollection.equals(lic);
+        Assert.assertEquals(lic, legendCollection);
+
         // verify the interactions that happened once during setup of JFreeChart
         verify(mockPlot, times(1)).addChangeListener(any());
         verify(mockPlot, times(1)).setChart(chart);
