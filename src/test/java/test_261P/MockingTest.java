@@ -101,33 +101,27 @@ public class MockingTest {
         final Font font = new Font("SansSerif", Font.BOLD, 18);
         //construct chart
         JFreeChart chart = new JFreeChart("Test chart", font, mockPlot, true);
-
         String newTitle = "new title";
         chart.setTitle(newTitle);
         TextTitle gotTitle = chart.getTitle();
         assert gotTitle.getText().equals(newTitle);
-
         String newSubTitle = "new subtitle";
         chart.addSubtitle(new TextTitle(newSubTitle));
         // get newly added subtitle at location 1 as location 0 holds the default LegendTitle
         Title gotSubTitle = chart.getSubtitle(1);
         assert ((TextTitle)gotSubTitle).getText().equals(newSubTitle);
-
         Image backgroundImage = chart.getBackgroundImage();
         assert backgroundImage==null;
         // getLegend() should not give a call to plot's methods
         LegendTitle chartLegend = chart.getLegend();
-
         //at the end get and check title
         LegendItemCollection legendCollection = chart.getPlot().getLegendItems();
         assert legendCollection.equals(lic);
-
         // verify the interactions that happened once during setup of JFreeChart
         verify(mockPlot, times(1)).addChangeListener(any());
         verify(mockPlot, times(1)).setChart(chart);
         // verify getLegendItems() was called once from this method
         verify(mockPlot, times(1)).getLegendItems();
-
         // verify that no more interactions happened with the mock
         verifyNoMoreInteractions(mockPlot);
     }
