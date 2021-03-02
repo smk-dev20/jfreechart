@@ -7,19 +7,13 @@ import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.chart.title.Title;
 import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.general.PieDataset;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-
-import static java.util.Arrays.asList;
 import static org.mockito.Mockito.*;
 
 public class MockingTest {
@@ -37,19 +31,9 @@ public class MockingTest {
 
         MockitoAnnotations.initMocks(this);
     }
-//    @Test
-//    public void test1() {
-//        DefaultPieDataset<String> data = new DefaultPieDataset<>();
-//        data.setValue("Java", 43);
-//        data.setValue("Visual Basic", 12);
-//        data.setValue("C/C++", 17);
-//        JFreeChart pieChart = ChartFactory.createPieChart("Pie Chart", data);
-//        when(chartFrame.getChartPanel()).thenReturn(new ChartFrame("Pie Chart",pieChart).getChartPanel());
-//        verify(chartFrame, times(1)).getChartPanel();
-//    }
 
     @Test
-    public void test2() {
+    public void testGetChartPanelFromMockedChartFrame() {
         DefaultPieDataset<String> data = new DefaultPieDataset<>();
         data.setValue("Java", 43);
         data.setValue("Visual Basic", 12);
@@ -57,8 +41,6 @@ public class MockingTest {
         JFreeChart pieChart = ChartFactory.createPieChart("Pie Chart", data);
         when(chartFrame.getChartPanel()).thenReturn(new ChartPanel(pieChart));
         boolean correctDataset = ((PiePlot)(chartFrame.getChartPanel().getChart().getPlot())).getDataset().equals(data);
-        //chartFrame.getChartPanel().getChart().setTitle("New Title");
-        verify(chartFrame, times(1)).getChartPanel();
         verify(chartFrame, times(1)).getChartPanel();
     }
 
@@ -90,7 +72,7 @@ public class MockingTest {
         verify(mockDataSet, times(1)).getKey(0);
         verify(mockDataSet, never()).getKey(1);
         verify(mockDataSet, never()).getKey(2);
-        //frame = new ChartFrame("My Chart", pieChart);
+
         try {
             ChartUtils.saveChartAsPNG(new File("../test3.png"),pieChart, 900, 900);
         } catch (IOException e) {
@@ -98,12 +80,11 @@ public class MockingTest {
         }
         //
          //getValue gets called for an item index
-        verify(mockDataSet, atMost(2)).getKey(0);
-        verify(mockDataSet, atMost(1)).getKey(1);
-        verify(mockDataSet, atMost(1)).getKey(2);
+        verify(mockDataSet, times(2)).getKey(0);
+        verify(mockDataSet, times(1)).getKey(1);
+        verify(mockDataSet, times(1)).getKey(2);
 
         //verify that mockDataSet calls getValue(key) at least 3times for 3keys.
-        // Don't know how many times inner code is calling mockDataSet methods. Numbers are as high as12 to 36. So put atleast(1)
         verify(mockDataSet, atLeast(3)).getValue(anyString());
         verify(mockDataSet, atLeast(1)).getKeys();
 
@@ -149,18 +130,5 @@ public class MockingTest {
 
         // verify that no more interactions happened with the mock
         verifyNoMoreInteractions(mockPlot);
-    }
-
-    public static void main(String[] args) {
-        //example code to see a  chartFrame. Maybe can use in mocking in a test function.
-//        MockingTest M = new MockingTest();
-//        DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
-//        dataset.setValue("one", 1);
-//        dataset.setValue("two", 2);
-//        JFreeChart pieChart = ChartFactory.createPieChart("Pie Chart", dataset);
-//
-//        M.frame = new ChartFrame("My Chart", pieChart);
-//        M.frame.pack();
-//        M.frame.setVisible(true);
     }
 }
